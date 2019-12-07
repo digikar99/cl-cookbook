@@ -10,6 +10,25 @@ multiplatform* Common Lisp environment. It ships Emacs25, SBCL (the
 implementation), Quicklisp (package manager), SLIME (IDE) and
 Git. It's the most straightforward way to get going !
 
+## Basic REPL
+
+If your distro has a lisp implementation (SBCL), cl-quicklisp and rlwrap, setting up a basic REPL is as simple as:
+
+    sudo apt-get install sbcl cl-quicklisp rlwrap
+    sbcl --load /usr/share/cl-quicklisp/quicklisp.lisp \
+         --eval '(quicklisp-quickstart:install)' \
+         --eval '(ql:add-to-init-file)' \
+         --quit
+
+and appending the following to your `~/.bashrc` or equivalent:
+
+    alias sbcl-run="rlwrap sbcl --load $HOME/quicklisp/setup.lisp --eval '(setq *debugger-hook* (lambda (condition hook) 
+                        (declare (ignore hook))
+                        (princ condition)
+                        (abort)))'"
+
+The basic REPL can be accessed using `sbcl-run` from your terminal.
+
 ## Install an implementation
 
 ### With your package manager
